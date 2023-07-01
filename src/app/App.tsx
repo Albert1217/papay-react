@@ -1,6 +1,7 @@
 import { Box, Button, Container, Stack, Typography } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 import "../css/App.css";
+import "../css/navbar.css";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
 import { RestaurantPage } from "./screens/RestaurantPage";
@@ -10,12 +11,23 @@ import { Memberpage } from "./screens/Memberpage";
 import { HelpPage } from "./screens/HelpPage";
 import { LoginPage } from "./screens/LoginPage";
 import { HomePage } from "./screens/HomePage";
+import { NavbarHome } from "./component/header";
+import { NavbarRestaurant } from "./component/header/restaurant";
+import { NavbarOthers } from "./component/header/others";
 
 function App() {
+  const [path, setPath] = useState();
+  const main_path = window.location.pathname;
   return (
     <Router>
-      <div>
-        <nav>
+      {main_path == "/" ? (
+        <NavbarHome setPath={setPath} />
+      ) : main_path.includes("/restaurant") ? (
+        <NavbarRestaurant setPath={setPath} />
+      ) : (
+        <NavbarOthers setPath={setPath} />
+      )}
+      {/* <nav>
           <ul>
             <li>
               <Link to="/restaurant">RestaurantPage</Link>
@@ -40,31 +52,30 @@ function App() {
             </li>
           </ul>
         </nav>
-
-        <Switch>
-          <Route path="/restaurant">
-            <RestaurantPage />
-          </Route>
-          <Route path="/community">
-            <CommunityPage />
-          </Route>
-          <Route path="/orders">
-            <OrdersPage />
-          </Route>
-          <Route path="/member-page">
-            <Memberpage />
-          </Route>
-          <Route path="/help">
-            <HelpPage />
-          </Route>
-          <Route path="/login">
-            <LoginPage />
-          </Route>
-          <Route path="/">
-            <HomePage />
-          </Route>
-        </Switch>
-      </div>
+ */}
+      <Switch>
+        <Route path="/restaurant">
+          <RestaurantPage />
+        </Route>
+        <Route path="/community">
+          <CommunityPage />
+        </Route>
+        <Route path="/orders">
+          <OrdersPage />
+        </Route>
+        <Route path="/member-page">
+          <Memberpage />
+        </Route>
+        <Route path="/help">
+          <HelpPage />
+        </Route>
+        <Route path="/login">
+          <LoginPage />
+        </Route>
+        <Route path="/">
+          <HomePage />
+        </Route>
+      </Switch>
     </Router>
   );
 }
