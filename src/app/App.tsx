@@ -2,6 +2,7 @@ import { Box, Button, Container, Stack, Typography } from "@mui/material";
 import React, { useState } from "react";
 import "../css/App.css";
 import "../css/navbar.css";
+import "../css/footer.css";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
 import { RestaurantPage } from "./screens/RestaurantPage";
@@ -14,6 +15,7 @@ import { HomePage } from "./screens/HomePage";
 import { NavbarHome } from "./component/header";
 import { NavbarRestaurant } from "./component/header/restaurant";
 import { NavbarOthers } from "./component/header/others";
+import { Footer } from "./component/footer";
 
 function App() {
   const [path, setPath] = useState();
@@ -27,32 +29,7 @@ function App() {
       ) : (
         <NavbarOthers setPath={setPath} />
       )}
-      {/* <nav>
-          <ul>
-            <li>
-              <Link to="/restaurant">RestaurantPage</Link>
-            </li>
-            <li>
-              <Link to="/community">CommunityPage</Link>
-            </li>
-            <li>
-              <Link to="/orders">OrdersPage</Link>
-            </li>
-            <li>
-              <Link to="/member-page">Memberpage</Link>
-            </li>
-            <li>
-              <Link to="/help">HelpPage</Link>
-            </li>
-            <li>
-              <Link to="/login">LoginPage</Link>
-            </li>
-            <li>
-              <Link to="/">HomePage</Link>
-            </li>
-          </ul>
-        </nav>
- */}
+
       <Switch>
         <Route path="/restaurant">
           <RestaurantPage />
@@ -76,6 +53,7 @@ function App() {
           <HomePage />
         </Route>
       </Switch>
+      <Footer />
     </Router>
   );
 }
