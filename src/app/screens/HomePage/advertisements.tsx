@@ -12,7 +12,11 @@ export function Advertisements() {
         playsInline
         data-video-media=""
       >
-        <source src="./video/video.mp4" type="video/mp4" />
+        <source
+          data-src="./video/video.mp4"
+          type="video/mp4"
+          src="./video/video.mp4"
+        />
       </video>
     </div>
   );

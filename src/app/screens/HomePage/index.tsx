@@ -5,10 +5,10 @@ import { TopRestaurants } from "./topRestaurants";
 import { BestRestaurants } from "./bestRestaurants";
 
 import { Advertisements } from "./advertisements";
-import { Events } from "./events";
 import { Recommendations } from "./recommendations";
 import { BestDishes } from "./bestdishes";
 import "../../../css/home.css";
+import { Events } from "./events";
 
 export function HomePage() {
   return (
