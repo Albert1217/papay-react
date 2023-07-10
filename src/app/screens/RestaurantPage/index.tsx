@@ -15,7 +15,7 @@ export function RestaurantPage() {
         <Route path={`${restaurant.path}/dish/:dish_id`}>
           <ChosenDish />
         </Route>
-        <Route path={`${restaurant.path}/dish/:restaurant_id`}>
+        <Route path={`${restaurant.path}/:restaurant_id`}>
           <OneRestaurant />
         </Route>
         <Route path={`${restaurant.path}`}>
