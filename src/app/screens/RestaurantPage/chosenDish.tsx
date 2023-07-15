@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Container, Stack, Box } from "@mui/material";
 import { Swiper, SwiperSlide } from "swiper/react";
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
-import Marginer from "../../component/marginer";
+import Marginer from "../../components/marginer";
 import Button from "@mui/material/Button";
 import Rating from "@mui/material/Rating";
 import "swiper/css";

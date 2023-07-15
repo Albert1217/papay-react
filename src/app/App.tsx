@@ -8,14 +8,14 @@ import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import { RestaurantPage } from "./screens/RestaurantPage";
 import { CommunityPage } from "./screens/CommunityPage";
 import { OrdersPage } from "./screens/OrdersPage";
-import { Memberpage } from "./screens/Memberpage";
+import { MemberPage } from "./screens/MemberPage";
 import { HelpPage } from "./screens/HelpPage";
 import { LoginPage } from "./screens/LoginPage";
 import { HomePage } from "./screens/HomePage";
-import { NavbarHome } from "./component/header";
-import { NavbarRestaurant } from "./component/header/restaurant";
-import { NavbarOthers } from "./component/header/others";
-import { Footer } from "./component/footer";
+import { NavbarHome } from "./components/header";
+import { NavbarRestaurant } from "./components/header/restaurant";
+import { NavbarOthers } from "./components/header/others";
+import { Footer } from "./components/footer";
 
 function App() {
   const [path, setPath] = useState();
@@ -41,7 +41,7 @@ function App() {
           <OrdersPage />
         </Route>
         <Route path="/member-page">
-          <Memberpage />
+          <MemberPage />
         </Route>
         <Route path="/help">
           <HelpPage />
