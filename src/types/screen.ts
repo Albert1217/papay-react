@@ -8,10 +8,10 @@ export interface AppRootState {
 }
 
 export interface HomePageState {
-  topRestaurant: Restaurant[];
-  bestRestaurant: Restaurant[];
+  topRestaurants: Restaurant[];
+  bestRestaurants: Restaurant[];
   trendProducts: Product[];
   bestBoArticles: BoArtical[];
   trenBoArticles: BoArtical[];
-  newsBoArticles: any[];
+  newsBoArticles: BoArtical[];
 }

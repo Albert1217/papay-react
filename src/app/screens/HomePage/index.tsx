@@ -11,11 +11,11 @@ import "../../../css/home.css";
 import { Events } from "./events";
 
 export function HomePage() {
+  // selector: store => data
+
   useEffect(() => {
-    console.log("componentDidMount => Data fetch");
-    return () => {
-      console.log("componentWillUnmount process");
-    };
+    // backend data request => data
+    //  slice: data => store
   }, []);
 
   return (
