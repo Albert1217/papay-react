@@ -1,115 +1,83 @@
 import { MonetizationOn } from "@mui/icons-material";
-import { Box, Container, Stack } from "@mui/material";
+import { Box, Container, Stack, useScrollTrigger } from "@mui/material";
 import { url } from "inspector";
-import React from "react";
+import React, { useEffect } from "react";
+// REDUX
+import { useDispatch, useSelector } from "react-redux";
+import { Dispatch } from "@reduxjs/toolkit";
+import { setTrendProducts } from "../../screens/HomePage/slice";
+import { Product } from "../../../types/product";
+import ProductApiService from "../../apiServices/productApiService";
+import { retrieveTrendProducts } from "./selector";
+import { createSelector } from "reselect";
+import { serverApi } from "../../../lib/config";
+
+//** REDUX SLICE */
+const actionDispatch = (dispach: Dispatch) => ({
+  setTrenProducts: (data: Product[]) => dispach(setTrendProducts(data)),
+});
+
+//** REDUX SELECTOR */
+const trendProductsRetriever = createSelector(
+  retrieveTrendProducts,
+  (trendProducts) => ({
+    trendProducts,
+  })
+);
 
 export function BestDishes() {
+  //** INITIALIZATION */
+  const { setTrenProducts } = actionDispatch(useDispatch());
+  const { trendProducts } = useSelector(trendProductsRetriever);
+  useEffect(() => {
+    const productService = new ProductApiService();
+    productService
+      .getTargetProducts({ order: "product_likes", page: 1, limit: 4 })
+      .then((data) => setTrendProducts(data))
+      .catch((err) => console.log(err));
+  }, []);
+
   return (
     <div className="best_dishes_frame">
       <Container>
         <Stack flexDirection={"column"} alignItems={"center"}>
           <Box className="category_title">Trendagi Ovqatlar</Box>
           <Stack sx={{ mt: "43px" }} flexDirection={"row"}>
-            <Box className="dish_box">
-              <Stack
-                className="dish_img"
-                sx={{
-                  backgroundImage: `url("https://images.unsplash.com/photo-1602253057119-44d745d9b860?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8ZGlzaHxlbnwwfHwwfHx8MA%3D%3D&w=1000&q=80"
-                  )`,
-                }}
-              >
-                <div className={"dish_sale"}>normal size</div>
-                <div className={"view_btn"}>
-                  Batafsil korish
-                  <img
-                    src={"/icons/arrow_righ.svg"}
-                    style={{ marginLeft: "9px" }}
-                  />
-                </div>
-              </Stack>
-              <Stack className={"dish_desc"}>
-                <span className={"dish_title_text"}>Chicken Mayo</span>
-                <span className={"dish_desc_text"}>
-                  <MonetizationOn />
-                  11
-                </span>
-              </Stack>
-            </Box>
-            <Box className="dish_box">
-              <Stack
-                className="dish_img"
-                sx={{
-                  backgroundImage: `url("https://images.unsplash.com/photo-1602253057119-44d745d9b860?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8ZGlzaHxlbnwwfHwwfHx8MA%3D%3D&w=1000&q=80"
-                  )`,
-                }}
-              >
-                <div className={"dish_sale"}>normal size</div>
-                <div className={"view_btn"}>
-                  Batafsil korish
-                  <img
-                    src={"/icons/arrow_righ.svg"}
-                    style={{ marginLeft: "9px" }}
-                  />
-                </div>
-              </Stack>
-              <Stack className={"dish_desc"}>
-                <span className={"dish_title_text"}>Chicken Mayo</span>
-                <span className={"dish_desc_text"}>
-                  <MonetizationOn />
-                  11
-                </span>
-              </Stack>
-            </Box>
-            <Box className="dish_box">
-              <Stack
-                className="dish_img"
-                sx={{
-                  backgroundImage: `url("https://images.unsplash.com/photo-1602253057119-44d745d9b860?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8ZGlzaHxlbnwwfHwwfHx8MA%3D%3D&w=1000&q=80"
-                  )`,
-                }}
-              >
-                <div className={"dish_sale"}>normal size</div>
-                <div className={"view_btn"}>
-                  Batafsil korish
-                  <img
-                    src={"/icons/arrow_righ.svg"}
-                    style={{ marginLeft: "9px" }}
-                  />
-                </div>
-              </Stack>
-              <Stack className={"dish_desc"}>
-                <span className={"dish_title_text"}>Chicken Mayo</span>
-                <span className={"dish_desc_text"}>
-                  <MonetizationOn />
-                  11
-                </span>
-              </Stack>
-            </Box>
-            <Box className="dish_box">
-              <Stack
-                className="dish_img"
-                sx={{
-                  backgroundImage: `url("https://images.unsplash.com/photo-1602253057119-44d745d9b860?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8ZGlzaHxlbnwwfHwwfHx8MA%3D%3D&w=1000&q=80"
-                  )`,
-                }}
-              >
-                <div className={"dish_sale"}>normal size</div>
-                <div className={"view_btn"}>
-                  Batafsil korish
-                  <img
-                    src={"/icons/arrow_righ.svg"}
-                    style={{ marginLeft: "9px" }}
-                  />
-                </div>
-              </Stack>
-              <Stack className={"dish_desc"}>
-                <span className={"dish_title_text"}>Chicken Mayo</span>
-                <span className={"dish_desc_text"}>
-                  <MonetizationOn />
-                  11
-                </span>
-              </Stack>
-            </Box>
+            {trendProducts.map((product: Product) => {
+              const image_path = `${serverApi}/${product.product_images[0]}`;
+              const size_volume =
+                product.product_collection === "drink"
+                  ? product.product_volume + "l"
+                  : product.product_size + "size";
+              return (
+                <Box className="dish_box">
+                  <Stack
+                    className="dish_img"
+                    sx={{
+                      backgroundImage: `url(${image_path})`,
+                    }}
+                  >
+                    <div className={"dish_sale"}>{size_volume}</div>
+                    <div className={"view_btn"}>
+                      <div>Batafsil korish</div>
+                      <img
+                        src={"/icons/arrow_righ.svg"}
+                        style={{ marginLeft: "9px" }}
+                      />
+                    </div>
+                  </Stack>
+                  <Stack className={"dish_desc"}>
+                    <span className={"dish_title_text"}>
+                      {product.product_name}
+                    </span>
+                    <span className={"dish_desc_text"}>
+                      <MonetizationOn />
+                      {product.product_price}
+                    </span>
+                  </Stack>
+                </Box>
+              );
+            })}
           </Stack>
         </Stack>
       </Container>
